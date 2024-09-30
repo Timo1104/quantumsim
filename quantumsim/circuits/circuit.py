@@ -647,7 +647,7 @@ class Gate(GatePlaceholder):
         num_qubits = len(bases_in)
         if qubits is None:
             qubits = list(range(num_qubits))
-        return Gate(
+        return cls(
             qubits,
             bases_in[0].dim_hilbert,
             lambda: (ptm, bases_in, bases_out),
