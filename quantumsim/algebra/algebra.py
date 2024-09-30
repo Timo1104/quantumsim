@@ -15,8 +15,8 @@ def _bases_equal(b1, b2) -> bool:
     """
     Test whether to bases are equal.
 
-    Returns true if the length of both bases are equal, as well as all basis vectors
-    of each element.
+    Returns true if the length of both bases are equal, and each basis in the tuples are
+    equal.
 
     Parameters
     ----------
