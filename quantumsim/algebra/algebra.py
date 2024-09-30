@@ -60,7 +60,7 @@ def kraus_to_ptm(kraus, bases_in, bases_out):
 
 def ptm_convert_basis(ptm, bi_old, bo_old, bi_new, bo_new):
     # Optimization: return PTM directly if old and new bases are equal
-    if _bases_equal(bi_old, bi_new) and _bases_equal(bo_old, bi_new):
+    if _bases_equal(bi_old, bi_new) and _bases_equal(bo_old, bo_new):
         return ptm
 
     shape = tuple(b.dim_pauli for b in chain(bo_new, bi_new))
