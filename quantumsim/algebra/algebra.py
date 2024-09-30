@@ -11,6 +11,25 @@ sigma = {
 }
 
 
+def _bases_equal(b1, b2) -> bool:
+    """
+    Test whether to bases are equal.
+
+    Returns true if the length of both bases are equal, as well as all basis vectors
+    of each element.
+
+    Parameters
+    ----------
+    b1: tuple of PauliBasis to compare
+    b2: tuple of PauliBasis to compare
+
+    Returns
+    -------
+    bool
+    """
+    return len(b1) == len(b2) and all(_b1 == _b2 for _b1, _b2 in zip(b1, b2))
+
+
 @lru_cache(maxsize=128)
 def bases_kron(bases):
     return reduce(np.kron, [b.vectors for b in bases])
@@ -40,6 +59,10 @@ def kraus_to_ptm(kraus, bases_in, bases_out):
 
 
 def ptm_convert_basis(ptm, bi_old, bo_old, bi_new, bo_new):
+    # Optimization: return PTM directly if old and new bases are equal
+    if _bases_equal(bi_old, bi_new) and _bases_equal(bo_old, bi_new):
+        return ptm
+
     shape = tuple(b.dim_pauli for b in chain(bo_new, bi_new))
     d_in = np.prod([b.dim_pauli for b in bi_old])
     d_out = np.prod([b.dim_pauli for b in bo_old])
